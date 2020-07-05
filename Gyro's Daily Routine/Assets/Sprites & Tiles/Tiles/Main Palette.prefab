@@ -491,6 +491,15 @@ Tilemap:
       m_ObjectToInstantiate: {fileID: 0}
       m_TileFlags: 1
       m_ColliderType: 1
+  - first: {x: 5, y: 6, z: 0}
+    second:
+      m_TileIndex: 46
+      m_TileSpriteIndex: 24
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_ObjectToInstantiate: {fileID: 0}
+      m_TileFlags: 2
+      m_ColliderType: 1
   m_AnimatedTiles: {}
   m_TileAssetArray:
   - m_RefCount: 1
@@ -585,6 +594,8 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: ed9dffa9e1e0d3d40ace01e7dc02c20d, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 763511521e90bc5428bfa016843f9e35, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: a3f53e9c7096db04581814d3b4d08b2f, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 1
     m_Data: {fileID: -6414447125379547148, guid: d641dde8e6f500b429702c3a3c426545,
@@ -655,7 +666,7 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: 1958745200148787322, guid: ccc790ed4d9ddaa45b7f3e3c3740b943,
       type: 3}
-  - m_RefCount: 1
+  - m_RefCount: 2
     m_Data: {fileID: 7953296568139915108, guid: ccc790ed4d9ddaa45b7f3e3c3740b943,
       type: 3}
   - m_RefCount: 1
@@ -722,7 +733,7 @@ Tilemap:
     m_Data: {fileID: -4897907173415269231, guid: ccc790ed4d9ddaa45b7f3e3c3740b943,
       type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 46
+  - m_RefCount: 47
     m_Data:
       e00: 1
       e01: 0
@@ -759,12 +770,12 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 50
+  - m_RefCount: 51
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -1, y: -11, z: 0}
-  m_Size: {x: 13, y: 12, z: 1}
+  m_Size: {x: 13, y: 18, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -870,7 +881,7 @@ Grid:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7931730895249642936}
   m_Enabled: 1
-  m_CellSize: {x: 0.32, y: 0.32, z: 0}
+  m_CellSize: {x: 1, y: 1, z: 0}
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
