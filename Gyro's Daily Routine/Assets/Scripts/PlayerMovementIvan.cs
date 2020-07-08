@@ -9,7 +9,7 @@ public class PlayerMovementIvan : MonoBehaviour
 
     public float runSpeed = 40f;
 
-    float horizontalMove = 0f;
+    float horizontalMove = 5f;
     bool jump = false;
     bool crouch = false;
 
