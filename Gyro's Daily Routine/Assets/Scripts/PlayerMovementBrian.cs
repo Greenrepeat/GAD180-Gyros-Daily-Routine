@@ -29,7 +29,6 @@ public class PlayerMovementBrian : MonoBehaviour
         Run();
         Jump();
         FlipSprite();
-        //Move();
     }
 
     private void Run()
@@ -37,7 +36,7 @@ public class PlayerMovementBrian : MonoBehaviour
         float moveCharacter = Input.GetAxis("Horizontal");
         Vector2 playerVelocity = new Vector2(moveCharacter * moveSpeed, myRigidbody2D.velocity.y);
         myRigidbody2D.velocity = playerVelocity;
-        Debug.Log(playerVelocity);
+        //Debug.Log(playerVelocity);
     }
 
     private void Jump()
@@ -63,10 +62,5 @@ public class PlayerMovementBrian : MonoBehaviour
         }
     }
 
-    //private void Move()
-    //{
-    //    horizontalInput = Input.GetAxis("Horizontal");
-    //    transform.Translate(Vector2.right * Time.deltaTime * moveSpeed * horizontalInput);
-    //}
 
 }
