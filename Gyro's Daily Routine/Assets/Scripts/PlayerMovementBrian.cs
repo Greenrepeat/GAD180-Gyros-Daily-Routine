@@ -62,5 +62,19 @@ public class PlayerMovementBrian : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("MovingPlatform"))
+        {
+            this.transform.parent = other.transform;
+        }
+    }
 
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("MovingPlatform"))
+        {
+            this.transform.parent = null;
+        }
+    }
 }
