@@ -10,7 +10,6 @@ public class PlayerMovementBrian : MonoBehaviour
     public float jumpSpeed;
     private float horizontalInput;
 
-
     Rigidbody2D myRigidbody2D;
     CapsuleCollider2D myBodyCollider;
     BoxCollider2D myFeet;
@@ -77,4 +76,5 @@ public class PlayerMovementBrian : MonoBehaviour
             this.transform.parent = null;
         }
     }
+
 }
