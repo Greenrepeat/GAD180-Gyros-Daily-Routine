@@ -9,6 +9,8 @@ public class PlayerMovementBrian : MonoBehaviour
     public float moveSpeed;
     public float jumpSpeed;
     private float horizontalInput;
+    public static bool onGround;
+    public bool grappleFromGroundOnly;
 
     Rigidbody2D myRigidbody2D;
     CapsuleCollider2D myBodyCollider;
@@ -28,6 +30,11 @@ public class PlayerMovementBrian : MonoBehaviour
         Run();
         Jump();
         FlipSprite();
+
+        //if (Input.GetMouseButtonDown(0)
+        //{
+        //    this.transform.parent = null;
+        //}
     }
 
     private void Run()
@@ -47,6 +54,12 @@ public class PlayerMovementBrian : MonoBehaviour
                 Vector2 jumpVelocity = new Vector2(0f, jumpSpeed);
                 myRigidbody2D.velocity += jumpVelocity;
             }
+            onGround = true;
+        }
+
+        if (!myFeet.IsTouchingLayers(LayerMask.GetMask("Foreground")) && grappleFromGroundOnly)
+        {
+            onGround = false;
         }
 
     }

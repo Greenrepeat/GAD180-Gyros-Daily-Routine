@@ -8,6 +8,8 @@ public class Death : MonoBehaviour
     //private bool death = false;
 
     public GameObject player;
+    public float xPos;
+    public float yPos;
  
     // Start is called before the first frame update
     void Start()
@@ -25,7 +27,7 @@ public class Death : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            player.transform.position = new Vector2(0.5f, 0.5f);
+            player.transform.position = new Vector2(xPos, yPos);
             //SceneManager.LoadScene(0);
             //death = true;
             //Debug.Log(death);
