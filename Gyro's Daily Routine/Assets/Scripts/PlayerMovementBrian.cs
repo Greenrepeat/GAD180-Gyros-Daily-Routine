@@ -14,14 +14,14 @@ public class PlayerMovementBrian : MonoBehaviour
 
     Rigidbody2D myRigidbody2D;
     CapsuleCollider2D myBodyCollider;
-    BoxCollider2D myFeet;
+    CapsuleCollider2D myFeet;
 
     // Start is called before the first frame update
     void Start()
     {
         myRigidbody2D = GetComponent<Rigidbody2D>();
         myBodyCollider = GetComponent<CapsuleCollider2D>();
-        myFeet = GetComponent<BoxCollider2D>();
+        myFeet = GetComponent<CapsuleCollider2D>();
     }
 
     // Update is called once per frame
@@ -31,9 +31,14 @@ public class PlayerMovementBrian : MonoBehaviour
         Jump();
         FlipSprite();
 
-        //if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
+        {
+            this.transform.parent = null;
+        }
+        //while (Input.GetMouseButtonDown(0))
         //{
-        //    this.transform.parent = null;
+        //    Vector2 playerJitter = new Vector2(0.1f * moveSpeed, myRigidbody2D.velocity.y);
+        //    myRigidbody2D.velocity = playerJitter;
         //}
     }
 
@@ -79,6 +84,17 @@ public class PlayerMovementBrian : MonoBehaviour
         if (other.gameObject.CompareTag("MovingPlatform"))
         {
             this.transform.parent = other.transform;
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                Vector2 jumpVelocity = new Vector2(0f, jumpSpeed);
+                myRigidbody2D.velocity += jumpVelocity;
+            }
+
+
+            //float moveCharacter = Input.GetAxis("Horizontal");
+            //Vector2 playerjitter = new Vector2(myRigidbody2D.velocity.x, 1f);
+            //myRigidbody2D.velocity = playerjitter;
         }
     }
 
