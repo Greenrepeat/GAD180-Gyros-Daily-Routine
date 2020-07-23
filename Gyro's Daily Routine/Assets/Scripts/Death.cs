@@ -20,7 +20,10 @@ public class Death : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            //SceneManager.LoadScene(0);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D other)

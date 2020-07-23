@@ -13,15 +13,15 @@ public class PlayerMovementBrian : MonoBehaviour
     public bool grappleFromGroundOnly;
 
     Rigidbody2D myRigidbody2D;
-    CapsuleCollider2D myBodyCollider;
-    CapsuleCollider2D myFeet;
+    CapsuleCollider2D myBody;
+    BoxCollider2D myFeet;
 
     // Start is called before the first frame update
     void Start()
     {
         myRigidbody2D = GetComponent<Rigidbody2D>();
-        myBodyCollider = GetComponent<CapsuleCollider2D>();
-        myFeet = GetComponent<CapsuleCollider2D>();
+        myBody = GetComponent<CapsuleCollider2D>();
+        myFeet = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -34,6 +34,11 @@ public class PlayerMovementBrian : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             this.transform.parent = null;
+            myFeet.enabled = false;
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            myFeet.enabled = true;
         }
         //while (Input.GetMouseButtonDown(0))
         //{
@@ -84,17 +89,6 @@ public class PlayerMovementBrian : MonoBehaviour
         if (other.gameObject.CompareTag("MovingPlatform"))
         {
             this.transform.parent = other.transform;
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                Vector2 jumpVelocity = new Vector2(0f, jumpSpeed);
-                myRigidbody2D.velocity += jumpVelocity;
-            }
-
-
-            //float moveCharacter = Input.GetAxis("Horizontal");
-            //Vector2 playerjitter = new Vector2(myRigidbody2D.velocity.x, 1f);
-            //myRigidbody2D.velocity = playerjitter;
         }
     }
 

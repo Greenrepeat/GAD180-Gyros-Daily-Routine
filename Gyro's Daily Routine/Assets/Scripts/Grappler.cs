@@ -18,6 +18,7 @@ public class Grappler : MonoBehaviour
     private Vector3 tempPos;
 
     public bool changeMode;
+    public bool breakHook;
 
     
     // Start is called before the first frame update
@@ -34,6 +35,12 @@ public class Grappler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (distanceJoint.distance <= 0.0051f && breakHook)
+        {
+            distanceJoint.enabled = false;
+            lineRenderer.positionCount = 0;
+        }
+
         GetMousePos();
         
         if (Input.GetMouseButtonDown(0) && check && PlayerMovementBrian.onGround)
