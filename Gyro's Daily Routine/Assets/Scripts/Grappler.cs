@@ -70,9 +70,9 @@ public class Grappler : MonoBehaviour
         {
             _distanceJoint.distance -= grappleSpeed * Time.deltaTime;
         }
-        if (Input.GetKey(KeyCode.S))
-        {
-            _distanceJoint.distance += grappleSpeed * Time.deltaTime;
-        }
+        //if (Input.GetKey(KeyCode.S))
+        //{
+        //    _distanceJoint.distance += grappleSpeed * Time.deltaTime;
+        //}
     }
 }

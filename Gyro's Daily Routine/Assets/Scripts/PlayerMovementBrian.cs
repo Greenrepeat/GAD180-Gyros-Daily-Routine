@@ -31,7 +31,7 @@ public class PlayerMovementBrian : MonoBehaviour
         Jump();
         FlipSprite();
 
-        //if (Input.GetMouseButtonDown(0)
+        //if (Input.GetMouseButtonDown(0))
         //{
         //    this.transform.parent = null;
         //}
