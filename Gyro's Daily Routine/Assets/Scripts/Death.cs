@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class Death : MonoBehaviour
 {
     //private bool death = false;
-
     public GameObject player;
     public float xPos;
     public float yPos;
@@ -22,7 +21,8 @@ public class Death : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            //SceneManager.LoadScene(0);
+            SceneManager.LoadScene(0);
+            PlayerMovementBrian.gameStillRunning = true;
         }
     }
 

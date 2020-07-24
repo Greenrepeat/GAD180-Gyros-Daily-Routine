@@ -70,6 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a36092ed0e1f1b743951ae00bc57101f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blood: {fileID: 5810391924165114834, guid: d2f8c2d3a80768a4c9faaa881ba12447, type: 3}
   player: {fileID: 0}
   xPos: 0
   yPos: 0

@@ -35,6 +35,11 @@ public class Grappler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PlayerMovementBrian.gameStillRunning == false)
+        {
+            Destroy(this);
+        }
+
         if (distanceJoint.distance <= 0.0051f && breakHook)
         {
             distanceJoint.enabled = false;

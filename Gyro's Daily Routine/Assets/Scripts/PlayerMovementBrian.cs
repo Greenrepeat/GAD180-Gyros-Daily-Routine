@@ -1,16 +1,16 @@
-﻿using Boo.Lang.Environments;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovementBrian : MonoBehaviour
 {
-    public float moveSpeed;
+    public static float moveSpeed = 5f;
     public float jumpSpeed;
     private float horizontalInput;
     public static bool onGround;
     public bool grappleFromGroundOnly;
+    public static bool gameStillRunning = true;
 
     Rigidbody2D myRigidbody2D;
     CapsuleCollider2D myBody;
@@ -39,6 +39,15 @@ public class PlayerMovementBrian : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             myFeet.enabled = true;
+        }
+
+        if (gameStillRunning)
+        {
+            this.enabled = true;
+        }
+        else if (!gameStillRunning)
+        {
+            this.enabled = false;
         }
         //while (Input.GetMouseButtonDown(0))
         //{
