@@ -19,10 +19,14 @@ public class Death : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(0);
             PlayerMovementBrian.gameStillRunning = true;
+        }
+        if (Input.GetKey("escape"))
+        {
+            Application.Quit();
         }
     }
 

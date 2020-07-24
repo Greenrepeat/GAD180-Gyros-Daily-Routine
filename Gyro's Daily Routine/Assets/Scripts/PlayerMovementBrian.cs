@@ -45,7 +45,7 @@ public class PlayerMovementBrian : MonoBehaviour
         {
             this.enabled = true;
         }
-        else if (!gameStillRunning)
+        if (!gameStillRunning)
         {
             this.enabled = false;
         }
