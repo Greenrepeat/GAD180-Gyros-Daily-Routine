@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameEnd : MonoBehaviour
 {
@@ -20,16 +18,24 @@ public class GameEnd : MonoBehaviour
         LevelEnd();
     }
 
+    public void LevelEnd()
+    {
+        if (fadeIn)
+        {
+            levelEnd.color = new Color(1f, 1f, 1f, transparency += 0.1f * Time.deltaTime);
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
             //PlayerMovementBrian.moveSpeed = 0;
             PlayerMovementBrian.gameStillRunning = false;
-            Debug.Log("is touching door");
             fadeIn = true;
         }
     }
+
     private void OnCollisionExit2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -38,11 +44,4 @@ public class GameEnd : MonoBehaviour
         }
     }
 
-    public void LevelEnd()
-    {
-        if (fadeIn)
-        {
-            levelEnd.color = new Color(1f, 1f, 1f, transparency += 0.1f * Time.deltaTime);
-        }
-    }
 }

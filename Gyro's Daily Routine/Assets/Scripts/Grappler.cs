@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Grappler : MonoBehaviour
 {
@@ -9,15 +7,13 @@ public class Grappler : MonoBehaviour
     private Vector3 mousePos;
     private Camera _camera;
 
-    private bool check;
-
     public DistanceJoint2D distanceJoint;
-
     private LineRenderer lineRenderer;
 
     private Vector3 tempPos;
 
-    public bool changeMode;
+    private bool checkGrappling;
+    public bool GrappleControl;
     public bool breakHook;
 
     
@@ -28,48 +24,20 @@ public class Grappler : MonoBehaviour
         distanceJoint = GetComponent<DistanceJoint2D>();
         lineRenderer = GetComponent<LineRenderer>();
         distanceJoint.enabled = false;
-        check = true;
+        checkGrappling = true;
         lineRenderer.positionCount = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (PlayerMovementBrian.gameStillRunning == false)
-        {
-            Destroy(this);
-        }
-
-        if (distanceJoint.distance <= 0.0051f && breakHook)
-        {
-            distanceJoint.enabled = false;
-            lineRenderer.positionCount = 0;
-        }
-
-        GetMousePos();
-        
-        if (Input.GetMouseButtonDown(0) && check && PlayerMovementBrian.onGround)
-        {
-            distanceJoint.enabled = true;
-            distanceJoint.connectedAnchor = mousePos;
-            lineRenderer.positionCount = 2;
-            tempPos = mousePos;
-            check = false;
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            distanceJoint.enabled = false;
-            check = true;
-            lineRenderer.positionCount = 0;
-        }
-        
         DrawLine();
+        GetMousePos();
         GrappleLength();
-
-        if (changeMode)
-        {
-            distanceJoint.distance -= grappleSpeed * Time.deltaTime;
-        }
+        BreakHook();
+        GrappleController();
+        DestroyThisOnLevelEnd();
+        CheckMouseButton();
     }
 
     private void DrawLine()
@@ -86,7 +54,7 @@ public class Grappler : MonoBehaviour
 
     private void GrappleLength()
     {
-        if (Input.GetKey(KeyCode.W) && !changeMode)
+        if (Input.GetKey(KeyCode.W) && GrappleControl)
         {
             distanceJoint.distance -= grappleSpeed * Time.deltaTime;
         }
@@ -94,5 +62,57 @@ public class Grappler : MonoBehaviour
         //{
         //    distanceJoint.distance += grappleSpeed * Time.deltaTime;
         //}
+    }
+
+    private void BreakHook()
+    {
+        if (distanceJoint.distance <= 0.0051f && breakHook)
+        {
+            distanceJoint.enabled = false;
+            lineRenderer.positionCount = 0;
+        }
+    }
+
+    private void GrappleController()
+    {
+        if (!GrappleControl)
+        {
+            distanceJoint.distance -= grappleSpeed * Time.deltaTime;
+        }
+    }
+
+    private void DestroyThisOnLevelEnd()
+    {
+        if (PlayerMovementBrian.gameStillRunning == false)
+        {
+            Destroy(this);
+        }
+    }
+
+    private void CheckMouseButton()
+    {
+        if (Input.GetMouseButtonDown(0) && checkGrappling && PlayerMovementBrian.onGround)
+        {
+            distanceJoint.enabled = true;
+            distanceJoint.connectedAnchor = mousePos;
+            lineRenderer.positionCount = 2;
+            tempPos = mousePos;
+            checkGrappling = false;
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            distanceJoint.enabled = false;
+            checkGrappling = true;
+            lineRenderer.positionCount = 0;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("death"))
+        {
+            distanceJoint.enabled = false;
+            lineRenderer.positionCount = 0;
+        }
     }
 }

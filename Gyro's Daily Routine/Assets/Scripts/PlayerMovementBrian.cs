@@ -1,26 +1,20 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMovementBrian : MonoBehaviour
 {
     public static float moveSpeed = 5f;
     public float jumpSpeed;
-    private float horizontalInput;
     public static bool onGround;
     public bool grappleFromGroundOnly;
     public static bool gameStillRunning = true;
 
     Rigidbody2D myRigidbody2D;
-    CapsuleCollider2D myBody;
     BoxCollider2D myFeet;
 
     // Start is called before the first frame update
     void Start()
     {
         myRigidbody2D = GetComponent<Rigidbody2D>();
-        myBody = GetComponent<CapsuleCollider2D>();
         myFeet = GetComponent<BoxCollider2D>();
     }
 
@@ -30,30 +24,8 @@ public class PlayerMovementBrian : MonoBehaviour
         Run();
         Jump();
         FlipSprite();
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            this.transform.parent = null;
-            myFeet.enabled = false;
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            myFeet.enabled = true;
-        }
-
-        if (gameStillRunning)
-        {
-            this.enabled = true;
-        }
-        if (!gameStillRunning)
-        {
-            this.enabled = false;
-        }
-        //while (Input.GetMouseButtonDown(0))
-        //{
-        //    Vector2 playerJitter = new Vector2(0.1f * moveSpeed, myRigidbody2D.velocity.y);
-        //    myRigidbody2D.velocity = playerJitter;
-        //}
+        CheckMouseButton();
+        DisableThisOnGameEnd();
     }
 
     private void Run()
@@ -90,6 +62,31 @@ public class PlayerMovementBrian : MonoBehaviour
         if (playerIsMoving)
         {
             transform.localScale = new Vector2(Mathf.Sign(myRigidbody2D.velocity.x), 1f);
+        }
+    }
+
+    private void CheckMouseButton()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            this.transform.parent = null;
+            myFeet.enabled = false;
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            myFeet.enabled = true;
+        }
+    }
+
+    private void DisableThisOnGameEnd()
+    {
+        if (gameStillRunning)
+        {
+            this.enabled = true;
+        }
+        else if (!gameStillRunning)
+        {
+            this.enabled = false;
         }
     }
 
