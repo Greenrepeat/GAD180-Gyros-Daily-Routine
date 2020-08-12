@@ -4,12 +4,12 @@ public class PlayerMovementBrian : MonoBehaviour
 {
     public static float moveSpeed = 5f;
     public float jumpSpeed;
-    public static bool onGround;
+    [HideInInspector] public static bool onGround;
     public bool grappleFromGroundOnly;
     public static bool gameStillRunning = true;
 
-    Rigidbody2D myRigidbody2D;
-    BoxCollider2D myFeet;
+    private Rigidbody2D myRigidbody2D;
+    private BoxCollider2D myFeet;
 
     // Start is called before the first frame update
     void Start()
