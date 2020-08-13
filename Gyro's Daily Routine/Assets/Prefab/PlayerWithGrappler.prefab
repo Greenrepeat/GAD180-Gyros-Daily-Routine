@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 899637457877689995}
   - component: {fileID: 899637457877689993}
   m_Layer: 0
-  m_Name: Player(Brian) 1
+  m_Name: PlayerWithGrappler
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -315,5 +315,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grappleSpeed: 10
   distanceJoint: {fileID: 0}
-  changeMode: 1
+  GrappleControl: 0
   breakHook: 0

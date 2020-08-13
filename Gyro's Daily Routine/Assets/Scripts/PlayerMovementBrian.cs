@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor.Compilation;
+using UnityEngine;
 
 public class PlayerMovementBrian : MonoBehaviour
 {
@@ -11,11 +12,15 @@ public class PlayerMovementBrian : MonoBehaviour
     private Rigidbody2D myRigidbody2D;
     private BoxCollider2D myFeet;
 
+    private bool onPlatform;
+
     // Start is called before the first frame update
     void Start()
     {
         myRigidbody2D = GetComponent<Rigidbody2D>();
         myFeet = GetComponent<BoxCollider2D>();
+
+        onPlatform = false;
     }
 
     // Update is called once per frame
@@ -24,8 +29,16 @@ public class PlayerMovementBrian : MonoBehaviour
         Run();
         Jump();
         FlipSprite();
-        CheckMouseButton();
+        //CheckMouseButton();
         DisableThisOnGameEnd();
+
+        if (Input.GetMouseButtonDown(0) && onPlatform)
+        {
+            Vector2 jumpVelocity = new Vector2(0f, jumpSpeed * 2);
+            myRigidbody2D.velocity += jumpVelocity;
+        }
+
+        //Debug.Log(onPlatform);
     }
 
     private void Run()
@@ -33,6 +46,13 @@ public class PlayerMovementBrian : MonoBehaviour
         float moveCharacter = Input.GetAxis("Horizontal");
         Vector2 playerVelocity = new Vector2(moveCharacter * moveSpeed, myRigidbody2D.velocity.y);
         myRigidbody2D.velocity = playerVelocity;
+
+        //float h = Input.GetAxis("Horizontal");
+
+        //Vector3 tempVect = new Vector3(x: h, y: 0, z: 0);
+        //tempVect = tempVect.normalized * (moveSpeed * Time.deltaTime);
+        //transform.position += tempVect;
+
         //Debug.Log(playerVelocity);
     }
 
@@ -65,18 +85,18 @@ public class PlayerMovementBrian : MonoBehaviour
         }
     }
 
-    private void CheckMouseButton()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            this.transform.parent = null;
-            myFeet.enabled = false;
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            myFeet.enabled = true;
-        }
-    }
+    //private void CheckMouseButton()
+    //{
+    //    if (Input.GetMouseButtonDown(0))
+    //    {
+    //        this.transform.parent = null;
+    //        myFeet.enabled = false;
+    //    }
+    //    else if (Input.GetMouseButtonUp(0))
+    //    {
+    //        myFeet.enabled = true;
+    //    }
+    //}
 
     private void DisableThisOnGameEnd()
     {
@@ -94,7 +114,7 @@ public class PlayerMovementBrian : MonoBehaviour
     {
         if (other.gameObject.CompareTag("MovingPlatform"))
         {
-            this.transform.parent = other.transform;
+            onPlatform = true;
         }
     }
 
@@ -102,7 +122,7 @@ public class PlayerMovementBrian : MonoBehaviour
     {
         if (other.gameObject.CompareTag("MovingPlatform"))
         {
-            this.transform.parent = null;
+            onPlatform = false;
         }
     }
 

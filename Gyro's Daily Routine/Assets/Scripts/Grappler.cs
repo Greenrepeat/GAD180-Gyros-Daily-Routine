@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Grappler : MonoBehaviour
 {
@@ -16,7 +17,6 @@ public class Grappler : MonoBehaviour
     public bool GrappleControl;
     public bool breakHook;
 
-    
     // Start is called before the first frame update
     void Start()
     {
