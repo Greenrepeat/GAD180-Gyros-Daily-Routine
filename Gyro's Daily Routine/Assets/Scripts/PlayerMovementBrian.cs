@@ -1,4 +1,4 @@
-﻿using UnityEditor.Compilation;
+﻿//using UnityEditor.Compilation;
 using UnityEngine;
 
 public class PlayerMovementBrian : MonoBehaviour
@@ -14,6 +14,7 @@ public class PlayerMovementBrian : MonoBehaviour
 
     private bool onPlatform;
 
+    Vector3 tempSize;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +32,9 @@ public class PlayerMovementBrian : MonoBehaviour
         FlipSprite();
         //CheckMouseButton();
         DisableThisOnGameEnd();
+
+        //MiniGyro();
+        FlashyBoots();
 
         if (Input.GetMouseButtonDown(0) && onPlatform)
         {
@@ -82,6 +86,37 @@ public class PlayerMovementBrian : MonoBehaviour
         if (playerIsMoving)
         {
             transform.localScale = new Vector2(Mathf.Sign(myRigidbody2D.velocity.x), 1f);
+        }
+    }
+
+    private void MiniGyro()
+    {
+        if (Input.GetKeyDown(KeyCode.H) == true)
+        {
+            tempSize = transform.localScale;
+
+            tempSize.x = 0.75f;
+            tempSize.y = 0.75f;
+            tempSize.z = 0.75f;
+            transform.localScale = tempSize;
+
+        }
+        else
+        {
+            tempSize = transform.localScale;
+
+            tempSize.x = 1.5f;
+            tempSize.y = 1.5f;
+            tempSize.z = 1.5f;
+            transform.localScale = tempSize;
+        }
+    }
+
+    private void FlashyBoots()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            moveSpeed = 10f;
         }
     }
 

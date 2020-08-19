@@ -8,7 +8,10 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PlaytestingLevel.unity
     guid: 3e655ef3a68cd384e885d200e1979834
+  - enabled: 0
+    path: Assets/Scenes/TitleScreen.unity
+    guid: e07ac947db461bc4bbc26cf856b07bbd
   m_configObjects: {}

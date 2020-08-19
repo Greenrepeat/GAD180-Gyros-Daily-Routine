@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEngine.EventSystems;
+//using UnityEngine.EventSystems;
 
 public class Grappler : MonoBehaviour
 {
@@ -91,7 +91,7 @@ public class Grappler : MonoBehaviour
 
     private void CheckMouseButton()
     {
-        if (Input.GetMouseButtonDown(0) && checkGrappling && PlayerMovementBrian.onGround /*&& OnMouseover.mouseOverTiles*/)
+        if (Input.GetMouseButtonDown(0) && checkGrappling && PlayerMovementBrian.onGround/* && OnMouseover.mouseOverTiles*/)
         {
             distanceJoint.enabled = true;
             distanceJoint.connectedAnchor = mousePos;
