@@ -1,4 +1,5 @@
 ﻿//using UnityEditor.Compilation;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovementBrian : MonoBehaviour
@@ -14,6 +15,11 @@ public class PlayerMovementBrian : MonoBehaviour
 
     private bool onPlatform;
 
+    public float burstSpeedDuration = 0.2f;
+
+    //public static bool isGrappling;
+
+
     Vector3 tempSize;
     // Start is called before the first frame update
     void Start()
@@ -22,6 +28,8 @@ public class PlayerMovementBrian : MonoBehaviour
         myFeet = GetComponent<BoxCollider2D>();
 
         onPlatform = false;
+
+   
     }
 
     // Update is called once per frame
@@ -30,18 +38,15 @@ public class PlayerMovementBrian : MonoBehaviour
         Run();
         Jump();
         FlipSprite();
-        //CheckMouseButton();
         DisableThisOnGameEnd();
-
-        //MiniGyro();
-        FlashyBoots();
+        StartCoroutine(flashyBoots());
+        //CheckMouseButton();
 
         if (Input.GetMouseButtonDown(0) && onPlatform)
         {
             Vector2 jumpVelocity = new Vector2(0f, jumpSpeed * 2);
             myRigidbody2D.velocity += jumpVelocity;
         }
-
         //Debug.Log(onPlatform);
     }
 
@@ -51,11 +56,13 @@ public class PlayerMovementBrian : MonoBehaviour
         Vector2 playerVelocity = new Vector2(moveCharacter * moveSpeed, myRigidbody2D.velocity.y);
         myRigidbody2D.velocity = playerVelocity;
 
+
         //float h = Input.GetAxis("Horizontal");
 
         //Vector3 tempVect = new Vector3(x: h, y: 0, z: 0);
         //tempVect = tempVect.normalized * (moveSpeed * Time.deltaTime);
-        //transform.position += tempVect;
+        //transform.position += tempVect
+
 
         //Debug.Log(playerVelocity);
     }
@@ -89,34 +96,26 @@ public class PlayerMovementBrian : MonoBehaviour
         }
     }
 
-    private void MiniGyro()
+
+    private void DisableThisOnGameEnd()
     {
-        if (Input.GetKeyDown(KeyCode.H) == true)
+        if (gameStillRunning)
         {
-            tempSize = transform.localScale;
-
-            tempSize.x = 0.75f;
-            tempSize.y = 0.75f;
-            tempSize.z = 0.75f;
-            transform.localScale = tempSize;
-
+            this.enabled = true;
         }
-        else
+        else if (!gameStillRunning)
         {
-            tempSize = transform.localScale;
-
-            tempSize.x = 1.5f;
-            tempSize.y = 1.5f;
-            tempSize.z = 1.5f;
-            transform.localScale = tempSize;
+            this.enabled = false;
         }
     }
 
-    private void FlashyBoots()
+    IEnumerator flashyBoots()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            moveSpeed = 10f;
+            moveSpeed = 15f;
+            yield return new WaitForSeconds(burstSpeedDuration);
+            moveSpeed = 5f;
         }
     }
 
@@ -132,18 +131,6 @@ public class PlayerMovementBrian : MonoBehaviour
     //        myFeet.enabled = true;
     //    }
     //}
-
-    private void DisableThisOnGameEnd()
-    {
-        if (gameStillRunning)
-        {
-            this.enabled = true;
-        }
-        else if (!gameStillRunning)
-        {
-            this.enabled = false;
-        }
-    }
 
     private void OnCollisionEnter2D(Collision2D other)
     {

@@ -17,6 +17,10 @@ public class Grappler : MonoBehaviour
     public bool GrappleControl;
     public bool breakHook;
 
+    //public GameObject player;
+    //public float _gravityScale;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -98,12 +102,17 @@ public class Grappler : MonoBehaviour
             lineRenderer.positionCount = 2;
             tempPos = mousePos;
             checkGrappling = false;
+
+            //PlayerMovementBrian.isGrappling = true;
+            //player.GetComponent<Rigidbody2D>().gravityScale = _gravityScale;
         }
         else if (Input.GetMouseButtonUp(0))
         {
             distanceJoint.enabled = false;
             checkGrappling = true;
             lineRenderer.positionCount = 0;
+
+            //PlayerMovementBrian.isGrappling = false;
         }
     }
 
