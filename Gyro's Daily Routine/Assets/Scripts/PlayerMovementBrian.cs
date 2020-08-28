@@ -1,6 +1,7 @@
 ﻿//using UnityEditor.Compilation;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerMovementBrian : MonoBehaviour
 {
@@ -15,7 +16,16 @@ public class PlayerMovementBrian : MonoBehaviour
 
     private bool onPlatform;
 
-    public float burstSpeedDuration = 0.2f;
+    public float burstSpeedDuration = 30f;
+
+    public bool isDashing = false;
+
+
+    public AudioClip wheels;
+
+    AudioSource audioSource;
+
+    public UnityEvent JumpEvent;
 
     //public static bool isGrappling;
 
@@ -26,6 +36,7 @@ public class PlayerMovementBrian : MonoBehaviour
     {
         myRigidbody2D = GetComponent<Rigidbody2D>();
         myFeet = GetComponent<BoxCollider2D>();
+        audioSource = GetComponent<AudioSource>();
 
         onPlatform = false;
 
@@ -65,6 +76,23 @@ public class PlayerMovementBrian : MonoBehaviour
 
 
         //Debug.Log(playerVelocity);
+
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        {
+            if(myFeet.IsTouchingLayers(LayerMask.GetMask("Foreground")))
+            {
+                if (!audioSource.isPlaying)
+                {
+                    audioSource.Play();
+                }
+
+            }
+        }
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            audioSource.Stop();
+        }
     }
 
     private void Jump()
@@ -75,6 +103,7 @@ public class PlayerMovementBrian : MonoBehaviour
             {
                 Vector2 jumpVelocity = new Vector2(0f, jumpSpeed);
                 myRigidbody2D.velocity += jumpVelocity;
+                JumpEvent.Invoke();
             }
             onGround = true;
         }
@@ -111,13 +140,20 @@ public class PlayerMovementBrian : MonoBehaviour
 
     IEnumerator flashyBoots()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing)
         {
-            moveSpeed = 15f;
+            moveSpeed *= 2.2f;
+            audioSource.pitch *= 2f;
+            isDashing = true;
             yield return new WaitForSeconds(burstSpeedDuration);
-            moveSpeed = 5f;
+            moveSpeed /= 2.2f;
+            audioSource.pitch /= 2f;
+            yield return new WaitForSeconds(burstSpeedDuration * 2);
+            isDashing = false;
         }
     }
+
+    
 
     //private void CheckMouseButton()
     //{
