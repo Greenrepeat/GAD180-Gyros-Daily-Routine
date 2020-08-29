@@ -1,5 +1,7 @@
 ﻿//using UnityEditor.Compilation;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerMovementBrian : MonoBehaviour
 {
@@ -14,14 +16,31 @@ public class PlayerMovementBrian : MonoBehaviour
 
     private bool onPlatform;
 
+    public float burstSpeedDuration = 30f;
+
+    public bool isDashing = false;
+
+
+    public AudioClip wheels;
+
+    AudioSource audioSource;
+
+    public UnityEvent JumpEvent;
+
+    //public static bool isGrappling;
+
+
     Vector3 tempSize;
     // Start is called before the first frame update
     void Start()
     {
         myRigidbody2D = GetComponent<Rigidbody2D>();
         myFeet = GetComponent<BoxCollider2D>();
+        audioSource = GetComponent<AudioSource>();
 
         onPlatform = false;
+
+   
     }
 
     // Update is called once per frame
@@ -30,18 +49,15 @@ public class PlayerMovementBrian : MonoBehaviour
         Run();
         Jump();
         FlipSprite();
-        //CheckMouseButton();
         DisableThisOnGameEnd();
-
-        //MiniGyro();
-        FlashyBoots();
+        StartCoroutine(flashyBoots());
+        //CheckMouseButton();
 
         if (Input.GetMouseButtonDown(0) && onPlatform)
         {
             Vector2 jumpVelocity = new Vector2(0f, jumpSpeed * 2);
             myRigidbody2D.velocity += jumpVelocity;
         }
-
         //Debug.Log(onPlatform);
     }
 
@@ -51,13 +67,32 @@ public class PlayerMovementBrian : MonoBehaviour
         Vector2 playerVelocity = new Vector2(moveCharacter * moveSpeed, myRigidbody2D.velocity.y);
         myRigidbody2D.velocity = playerVelocity;
 
+
         //float h = Input.GetAxis("Horizontal");
 
         //Vector3 tempVect = new Vector3(x: h, y: 0, z: 0);
         //tempVect = tempVect.normalized * (moveSpeed * Time.deltaTime);
-        //transform.position += tempVect;
+        //transform.position += tempVect
+
 
         //Debug.Log(playerVelocity);
+
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        {
+            if(myFeet.IsTouchingLayers(LayerMask.GetMask("Foreground")))
+            {
+                if (!audioSource.isPlaying)
+                {
+                    audioSource.Play();
+                }
+
+            }
+        }
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            audioSource.Stop();
+        }
     }
 
     private void Jump()
@@ -68,6 +103,7 @@ public class PlayerMovementBrian : MonoBehaviour
             {
                 Vector2 jumpVelocity = new Vector2(0f, jumpSpeed);
                 myRigidbody2D.velocity += jumpVelocity;
+                JumpEvent.Invoke();
             }
             onGround = true;
         }
@@ -89,36 +125,35 @@ public class PlayerMovementBrian : MonoBehaviour
         }
     }
 
-    private void MiniGyro()
+
+    private void DisableThisOnGameEnd()
     {
-        if (Input.GetKeyDown(KeyCode.H) == true)
+        if (gameStillRunning)
         {
-            tempSize = transform.localScale;
-
-            tempSize.x = 0.75f;
-            tempSize.y = 0.75f;
-            tempSize.z = 0.75f;
-            transform.localScale = tempSize;
-
+            this.enabled = true;
         }
-        else
+        else if (!gameStillRunning)
         {
-            tempSize = transform.localScale;
-
-            tempSize.x = 1.5f;
-            tempSize.y = 1.5f;
-            tempSize.z = 1.5f;
-            transform.localScale = tempSize;
+            this.enabled = false;
         }
     }
 
-    private void FlashyBoots()
+    IEnumerator flashyBoots()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing)
         {
-            moveSpeed = 10f;
+            moveSpeed *= 2.2f;
+            audioSource.pitch *= 2f;
+            isDashing = true;
+            yield return new WaitForSeconds(burstSpeedDuration);
+            moveSpeed /= 2.2f;
+            audioSource.pitch /= 2f;
+            yield return new WaitForSeconds(burstSpeedDuration * 2);
+            isDashing = false;
         }
     }
+
+    
 
     //private void CheckMouseButton()
     //{
@@ -132,18 +167,6 @@ public class PlayerMovementBrian : MonoBehaviour
     //        myFeet.enabled = true;
     //    }
     //}
-
-    private void DisableThisOnGameEnd()
-    {
-        if (gameStillRunning)
-        {
-            this.enabled = true;
-        }
-        else if (!gameStillRunning)
-        {
-            this.enabled = false;
-        }
-    }
 
     private void OnCollisionEnter2D(Collision2D other)
     {

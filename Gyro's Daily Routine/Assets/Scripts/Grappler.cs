@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 //using UnityEngine.EventSystems;
 
 public class Grappler : MonoBehaviour
@@ -16,6 +17,13 @@ public class Grappler : MonoBehaviour
     private bool checkGrappling;
     public bool GrappleControl;
     public bool breakHook;
+
+
+    public UnityEvent GrappleEvent;
+
+    //public GameObject player;
+    //public float _gravityScale;
+
 
     // Start is called before the first frame update
     void Start()
@@ -91,19 +99,26 @@ public class Grappler : MonoBehaviour
 
     private void CheckMouseButton()
     {
-        if (Input.GetMouseButtonDown(0) && checkGrappling && PlayerMovementBrian.onGround/* && OnMouseover.mouseOverTiles*/)
+        if (Input.GetMouseButtonDown(0) && checkGrappling && PlayerMovementBrian.onGround /*&& OnMouseover.mouseOverTiles*/)
         {
             distanceJoint.enabled = true;
             distanceJoint.connectedAnchor = mousePos;
             lineRenderer.positionCount = 2;
             tempPos = mousePos;
             checkGrappling = false;
+
+            GrappleEvent.Invoke();
+
+            //PlayerMovementBrian.isGrappling = true;
+            //player.GetComponent<Rigidbody2D>().gravityScale = _gravityScale;
         }
         else if (Input.GetMouseButtonUp(0))
         {
             distanceJoint.enabled = false;
             checkGrappling = true;
             lineRenderer.positionCount = 0;
+
+            //PlayerMovementBrian.isGrappling = false;
         }
     }
 

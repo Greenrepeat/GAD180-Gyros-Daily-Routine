@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class GameEnd : MonoBehaviour
 {
     public SpriteRenderer levelEnd;
     public bool fadeIn = false;
     public float transparency = 0f;
+
+    public object SceneToLoad;
 
     // Start is called before the first frame update
     void Awake()
