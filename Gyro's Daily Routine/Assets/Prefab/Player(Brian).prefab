@@ -158,7 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d806e14c671dc2844a148dbd3ba2be5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpSpeed: 8
+  jumpSpeed: 9
   grappleFromGroundOnly: 1
   burstSpeedDuration: 0.2
   isDashing: 0
