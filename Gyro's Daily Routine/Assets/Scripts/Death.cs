@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class Death : MonoBehaviour
 {
@@ -7,6 +9,10 @@ public class Death : MonoBehaviour
     public GameObject player;
     public float xPos;
     public float yPos;
+
+    public GameObject blood;
+
+    public UnityEvent deathSound;
  
     // Start is called before the first frame update
     void Start()
@@ -17,22 +23,30 @@ public class Death : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SceneManager.LoadScene(0);
-            PlayerMovementBrian.gameStillRunning = true;
-        }
-        if (Input.GetKey("escape"))
-        {
-            Application.Quit();
-        }
+        //if (Input.GetKey("escape"))
+        //{
+        //    Application.Quit();
+        //}
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            player.transform.position = new Vector2(xPos, yPos);
+            StartCoroutine(PlayerDeath());
+
+            //player.transform.position = new Vector2(xPos, yPos);
         }
+    }
+
+    IEnumerator PlayerDeath()
+    {
+        Instantiate(blood, player.transform.position, Quaternion.identity);
+        player.SetActive(false);
+        yield return new WaitForSeconds(1.5f);
+        player.SetActive(true);
+        player.transform.position = new Vector2(xPos, yPos);
+        PlayerMovementBrian.isDashing = false;
+        PlayerMovementBrian.moveSpeed = 5f;
     }
 }

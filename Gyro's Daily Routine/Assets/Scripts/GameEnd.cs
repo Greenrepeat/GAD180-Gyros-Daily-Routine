@@ -4,16 +4,16 @@ using UnityEngine.SceneManagement;
 
 public class GameEnd : MonoBehaviour
 {
-    public SpriteRenderer levelEnd;
+    //public SpriteRenderer levelEnd;
     public bool fadeIn = false;
     public float transparency = 0f;
 
-    public object SceneToLoad;
+    public int sceneNumber;
 
     // Start is called before the first frame update
     void Awake()
     {
-        levelEnd.color = new Color(1f, 1f, 1f, transparency);
+        //levelEnd.color = new Color(1f, 1f, 1f, transparency);
     }
 
     // Update is called once per frame
@@ -26,7 +26,7 @@ public class GameEnd : MonoBehaviour
     {
         if (fadeIn)
         {
-            levelEnd.color = new Color(1f, 1f, 1f, transparency += 0.1f * Time.deltaTime);
+            //levelEnd.color = new Color(1f, 1f, 1f, transparency += 0.1f * Time.deltaTime);
         }
     }
 
@@ -34,8 +34,11 @@ public class GameEnd : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            //PlayerMovementBrian.moveSpeed = 0;
-            PlayerMovementBrian.gameStillRunning = false;
+            PlayerMovementBrian.moveSpeed = 5f;
+            PlayerMovementBrian.isDashing = false;
+            SceneManager.LoadScene(sceneNumber);
+            
+            //PlayerMovementBrian.gameStillRunning = false;
             fadeIn = true;
         }
     }
@@ -44,7 +47,7 @@ public class GameEnd : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            PlayerMovementBrian.gameStillRunning = true;
+            //PlayerMovementBrian.gameStillRunning = true;
         }
     }
 

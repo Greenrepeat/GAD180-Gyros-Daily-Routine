@@ -18,7 +18,7 @@ public class PlayerMovementBrian : MonoBehaviour
 
     public float burstSpeedDuration = 30f;
 
-    public bool isDashing = false;
+    public static bool isDashing = false;
 
 
     public AudioClip wheels;
@@ -57,6 +57,11 @@ public class PlayerMovementBrian : MonoBehaviour
         {
             Vector2 jumpVelocity = new Vector2(0f, jumpSpeed * 2);
             myRigidbody2D.velocity += jumpVelocity;
+        }
+
+        if (Input.GetKey("escape"))
+        {
+            Application.Quit();
         }
         //Debug.Log(onPlatform);
     }
